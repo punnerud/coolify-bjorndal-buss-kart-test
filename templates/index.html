@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Live Buses</title>
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+  </head>
+  <body>
+    <!-- Create a map container -->
+    <div id="map" style="width: 600px; height: 400px"></div>
+    
+    <!-- Include Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    
+    <!-- Initialize the map and set the view to the coordinates 59.832, 10.8373 -->
+    <script>
+      var map = L.map('map').setView([59.832, 10.8373], 13);
+      
+      // Add an OpenStreetMap tile layer to the map
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+          maxZoom: 18
+      }).addTo(map);
+    </script>
+    
+    <!-- Loop through the list of buses and add a marker for each one -->
+    {% for bus in buses %}
+      <script>
+        L.marker([{{ bus.lat }}, {{ bus.lon }}]).addTo(map)
+          .bindPopup("{{ bus.bus_number }} <br><br> Siste oppdatering: <br>{{ bus.last_updated }}");
+      </script>
+    {% endfor %}
+  </body>
+</html>
