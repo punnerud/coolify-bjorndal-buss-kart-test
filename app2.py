@@ -5,9 +5,18 @@ app = Flask(__name__)
 
 #Erstatter til enklere forklaring
 bus_names = {
-    "RUT:Line:2071": "71b",
-    "RUT:Line:71": "71a",
-    "RUT:Line:77": "77"
+    "RUT:Line:2071": {
+        "2":"71b Mortensrud",
+        "1":"71b Seterbråten"
+            },
+    "RUT:Line:71": {
+    "1":"71a Mortensrud",
+    "2":"71a Bjørdal"
+            },
+    "RUT:Line:77": {
+    "1":"77 Hauketo",
+    "2":"77 Bjørndal"
+            }
 }
 
 def fetch_buses():
@@ -31,6 +40,8 @@ def fetch_buses():
               latitude
               longitude
             }}
+            direction
+            vehicleId
           }}
         }}
         """
@@ -45,11 +56,15 @@ def fetch_buses():
               last_updated = vehicle['lastUpdated']
               lat = vehicle['location']['latitude']
               lon = vehicle['location']['longitude']
+              direction = vehicle['direction']
+              vehicleId = vehicle['vehicleId']
               buses.append({
                   'bus_number': bus_names[bus_number],  # Use bus_names dictionary to translate bus number
                   'last_updated': last_updated,
                   'lat': lat,
-                  'lon': lon
+                  'lon': lon,
+                  'direction': direction,
+                  'vehicleId': vehicleId
               })
 
     # Save data to cache file
@@ -65,16 +80,11 @@ def get_buses_from_cache():
         with open('cache.json', 'r') as f:
             cache_timestamp = time.gmtime(os.path.getmtime('cache.json'))
             age = time.time() - time.mktime(time.localtime(os.path.getmtime('cache.json')))
-            print("timestamp:",cache_timestamp)
-            print("age:",age)
             if age < 15:  # Cache is less than 15 seconds old
-                print("CACHE")
                 return json.load(f)
             else:
-              print("Not cache 1")
               return fetch_buses()
     except FileNotFoundError:
-        print("Not cache 2")
         return fetch_buses()
         pass  # Cache file does not exist, so just continue with the GraphQL request
 
