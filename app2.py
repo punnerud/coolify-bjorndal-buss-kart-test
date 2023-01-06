@@ -67,7 +67,7 @@ def get_buses_from_cache():
             age = time.time() - time.mktime(time.localtime(os.path.getmtime('cache.json')))
             print("timestamp:",cache_timestamp)
             print("age:",age)
-            if age < 30:  # Cache is less than 30 seconds old
+            if age < 15:  # Cache is less than 15 seconds old
                 print("CACHE")
                 return json.load(f)
             else:
