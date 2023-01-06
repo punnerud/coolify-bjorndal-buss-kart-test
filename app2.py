@@ -10,8 +10,8 @@ bus_names = {
         "1":"71b Seterbråten"
             },
     "RUT:Line:71": {
-    "1":"71a Mortensrud",
-    "2":"71a Bjørdal"
+    "2":"71a Mortensrud",
+    "1":"71a Bjørdal"
             },
     "RUT:Line:77": {
     "1":"77 Hauketo",
