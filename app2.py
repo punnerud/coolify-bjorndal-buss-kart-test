@@ -59,7 +59,7 @@ def fetch_buses():
               direction = vehicle['direction']
               vehicleId = vehicle['vehicleId']
               buses.append({
-                  'bus_number': bus_names[bus_number],  # Use bus_names dictionary to translate bus number
+                  'bus_number': bus_names[line][direction],  # Use bus_names dictionary to translate bus number
                   'last_updated': last_updated,
                   'lat': lat,
                   'lon': lon,
