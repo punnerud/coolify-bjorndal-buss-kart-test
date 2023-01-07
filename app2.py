@@ -62,10 +62,11 @@ def fetch_buses():
               vehicleId = vehicle['vehicleId']
               
               ##  Sekunder siden: ##
-              time = datetime.datetime.strptime(last_updated, "%Y-%m-%dT%H:%M:%S.%f%z")
+              time = datetime.datetime.strptime(last_updated, '%Y-%m-%dT%H:%M:%S%z')
               now = datetime.datetime.now(time.tzinfo)
               elapsed_time = now - time
               secondsSinceUpdate = int(elapsed_time.total_seconds())
+
 
               buses.append({
                   'bus_number': bus_names[line][direction],  # Use bus_names dictionary to translate bus number
