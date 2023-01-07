@@ -1,6 +1,7 @@
 from flask import Flask, render_template, send_file
 import requests, time, os, json, sqlite3
 from lagretildb import save_to_database
+import datetime
 
 app = Flask(__name__)
 
@@ -59,13 +60,21 @@ def fetch_buses():
               lon = vehicle['location']['longitude']
               direction = vehicle['direction']
               vehicleId = vehicle['vehicleId']
+              
+              ##  Sekunder siden: ##
+              time = datetime.datetime.strptime(last_updated, "%Y-%m-%dT%H:%M:%S.%f%z")
+              now = datetime.datetime.now(time.tzinfo)
+              elapsed_time = now - time
+              secondsSinceUpdate = int(elapsed_time.total_seconds())
+
               buses.append({
                   'bus_number': bus_names[line][direction],  # Use bus_names dictionary to translate bus number
                   'last_updated': last_updated,
                   'lat': lat,
                   'lon': lon,
                   'direction': direction,
-                  'vehicleId': vehicleId
+                  'vehicleId': vehicleId,
+                  'secondsSinceUpdate' : secondsSinceUpdate,
               })
     #Lagre til database
     save_to_database(buses)

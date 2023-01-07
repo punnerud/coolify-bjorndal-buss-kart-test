@@ -40,7 +40,7 @@
     {% for bus in buses %}
       <script>
         L.marker([{{ bus.lat }}, {{ bus.lon }}]).addTo(map)
-          .bindPopup("{{ bus.bus_number }} <br><br> Siste oppdatering: <br>{{ bus.last_updated }}<br>Bussnr:<br>{{bus.vehicleId}}");
+          .bindPopup("{{ bus.bus_number }} <br><br> Sekunder siden forrige posisjon:<br> {{ bus.secondsSinceUpdate }}<br><br>Siste oppdatering: <br>{{ bus.last_updated }}<br>Bussnr:<br>{{bus.vehicleId}}");
       </script>
     {% endfor %}
   </body>
