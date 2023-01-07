@@ -8,14 +8,14 @@
   </head>
   <body>
     <!-- Create a map container -->
-    <div id="map" style="width: 600px; height: 800px"></div>
+    <div id="map" style="width: 500px; height: 700px"></div>
     
     <!-- Include Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     
     <!-- Initialize the map and set the view to the coordinates 59.832, 10.8373 -->
     <script>
-      var map = L.map('map').setView([59.832, 10.8373], 15);
+      var map = L.map('map').setView([59.832, 10.8373], 14);
       
       // Add an OpenStreetMap tile layer to the map
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
