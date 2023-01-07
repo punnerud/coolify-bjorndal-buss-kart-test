@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file
 import requests, time, os, json, sqlite3
 from lagretildb import save_to_database
 
@@ -97,5 +97,19 @@ def index():
     # Render template with bus data
     return render_template('index.html', buses=buses)
 
+@app.route("/database", methods = ['GET'])
+def db_return():
+    store_location = os.environ.get("STORE_LOCATION")
+    if store_location:
+        db_file = os.path.join(store_location, "database.db")
+    else:
+        db_file = "database.db"
+    return send_file(db_file, as_attachment=True)
+
+portnr = os.environ.get("portnumber")
+if portnr:
+    portnr = portnr
+else:
+    portnr = 5000
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=portnr, debug=True)
