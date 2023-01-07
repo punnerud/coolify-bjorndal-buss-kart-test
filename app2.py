@@ -1,5 +1,6 @@
 from flask import Flask, render_template
-import requests, time, os, json
+import requests, time, os, json, sqlite3
+from lagretildb import save_to_database
 
 app = Flask(__name__)
 
@@ -66,7 +67,8 @@ def fetch_buses():
                   'direction': direction,
                   'vehicleId': vehicleId
               })
-
+    #Lagre til database
+    save_to_database(buses)
     # Save data to cache file
     os.remove('cache.json') # For å lage ny timestamp
     with open('cache.json', 'w') as f:
@@ -92,9 +94,8 @@ def get_buses_from_cache():
 def index():
     # Try to get buses from cache, otherwise fetch them from the API
     buses = get_buses_from_cache() or fetch_buses()
-    print(buses)
     # Render template with bus data
     return render_template('index.html', buses=buses)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5500, debug=True)
