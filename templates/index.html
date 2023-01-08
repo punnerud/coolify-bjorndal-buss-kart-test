@@ -16,7 +16,7 @@
     #map {
         margin: 1em auto;
         passing: 3px;
-        height:100%;
+        height:90%;
         width: 100%;
         border: 2px black;
     }                                                                                                                                                                                                            
@@ -40,8 +40,46 @@
     {% for bus in buses %}
       <script>
         L.marker([{{ bus.lat }}, {{ bus.lon }}]).addTo(map)
-          .bindPopup("{{ bus.bus_number }} <br><br> Sekunder siden forrige posisjon:<br> {{ bus.secondsSinceUpdate }}<br><br>Siste oppdatering: <br>{{ bus.last_updated }}<br>Bussnr:<br>{{bus.vehicleId}}");
+          .bindPopup("{{ bus.bus_number }} <br><br> Sekunder siden forrige posisjon:<br> {{ bus.secondsSinceUpdate }}<br><br>Siste oppdatering: <br>{{ bus.last_updated.format('%H:%M:%S') }}<br>Bussnr:<br>{{bus.vehicleId}}");
       </script>
     {% endfor %}
+
+    <div id="countdown"></div>
+  <script>
+    function updateCountdown() {
+      // Get the current time
+      var now = new Date().getTime();
+
+      // Set the date we're counting down to
+      var refreshTime = now + 20000; // 20 seconds from now
+
+      // Update the countdown every 1 second
+      var x = setInterval(function() {
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the refresh time
+        var distance = refreshTime - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the countdown element
+        document.getElementById("countdown").innerHTML = "Sekunder til neste oppdatering: " + seconds ;
+
+        // If the countdown is finished, refresh the page
+        if (distance < 0) {
+          clearInterval(x);
+          location.reload();
+        }
+      }, 1000);
+    }
+
+    // Update the countdown when the page loads
+    updateCountdown();
+  </script>
   </body>
 </html>
