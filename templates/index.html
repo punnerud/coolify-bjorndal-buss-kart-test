@@ -51,7 +51,7 @@
       var now = new Date().getTime();
 
       // Set the date we're counting down to
-      var refreshTime = now + 60000; // 20 seconds from now
+      var refreshTime = now + 59000; // 20 seconds from now
 
       // Update the countdown every 1 second
       var x = setInterval(function() {
@@ -68,7 +68,7 @@
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Display the result in the countdown element
-        document.getElementById("countdown").innerHTML = "Sekunder til neste oppdatering: " + seconds + "<br>Du kan fint oppdatere oftere selv manuelt.";
+        document.getElementById("countdown").innerHTML = "Sekunder til neste oppdatering: " + seconds + 1 + "<br>Du kan fint oppdatere oftere selv manuelt.";
 
         // If the countdown is finished, refresh the page
         if (distance < 0) {
