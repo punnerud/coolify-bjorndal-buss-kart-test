@@ -109,7 +109,12 @@ def get_buses_from_cache():
 @app.route('/')
 def index():
     # Try to get buses from cache, otherwise fetch them from the API
-    buses = get_buses_from_cache() or fetch_buses()
+    try:
+        buses = get_buses_from_cache() or fetch_buses()
+    except:
+        print("Error - Ingen busser")
+        buses = {}
+        pass
     # Render template with bus data
     return render_template('index.html', buses=buses)
 
