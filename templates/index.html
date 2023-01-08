@@ -68,7 +68,7 @@
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Display the result in the countdown element
-        document.getElementById("countdown").innerHTML = "Sekunder til neste oppdatering: " + seconds + 1 + "<br>Du kan fint oppdatere oftere selv manuelt.";
+        document.getElementById("countdown").innerHTML = "Sekunder til neste oppdatering: " + Number(seconds + 1) + "<br>Du kan fint oppdatere oftere selv manuelt.";
 
         // If the countdown is finished, refresh the page
         if (distance < 0) {
