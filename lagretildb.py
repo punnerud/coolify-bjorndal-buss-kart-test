@@ -1,6 +1,6 @@
 import os
 import sqlite3
-
+ 
 def save_to_database(data: list):
     # Use default file path if STORE_LOCATION is not set
     store_location = os.environ.get("STORE_LOCATION")
